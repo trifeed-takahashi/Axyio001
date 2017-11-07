@@ -19,6 +19,10 @@ public class MyContext {
         instance = new MyContext(applicationContext);
     }
 
+    public Context getApplicationContext(){
+        return applicationContext;
+    }
+
     private MyContext(Context applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -29,5 +33,9 @@ public class MyContext {
             throw new RuntimeException("MyContext should be initialized!");
         }
         return instance;
+    }
+
+    public static String getString(int resId) {
+        return instance.getApplicationContext().getString(resId);
     }
 }

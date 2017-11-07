@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Axyio001</string>
+    <string name="app_name">悠林館・物産館共有送水ポンプ施設</string>
     <string name="imap4_host">imap.mail.yahoo.co.jp</string>
     <string name="imap4_ssl">YES</string>
-    <string name="imap4_port">YES</string>
+    <string name="imap4_port">993</string>
     <string name="mail_address">spqdk280@ybb.ne.jp</string>
     <string name="mail_password">MINIMINI98</string>
 </resources>
