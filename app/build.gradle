@@ -1,0 +1,35 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '27.0.0'
+    defaultConfig {
+        applicationId "jp.co.trifeed.axyio001"
+        minSdkVersion 22
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/activation.jar')
+    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/mail.jar')
+    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/additionnal.jar')
+}

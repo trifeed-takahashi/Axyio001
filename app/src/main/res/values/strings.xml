@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Axyio001</string>
+    <string name="imap4_host">imap.mail.yahoo.co.jp</string>
+    <string name="imap4_ssl">YES</string>
+    <string name="imap4_port">YES</string>
+    <string name="mail_address">spqdk280@ybb.ne.jp</string>
+    <string name="mail_password">MINIMINI98</string>
+</resources>
