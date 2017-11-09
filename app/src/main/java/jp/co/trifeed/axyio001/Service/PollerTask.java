@@ -7,12 +7,15 @@ package jp.co.trifeed.axyio001.Service;
 import android.util.Log;
 import java.util.TimerTask;
 
+import jp.co.trifeed.axyio001.AsyncImapRequest;
+
 public class PollerTask extends TimerTask {
 
     static final String TAG="PollerTask";
 
     @Override
     public void run() {
-        Log.d(TAG, "Hello!");
+        AsyncImapRequest task = new AsyncImapRequest();
+        task.execute();
     }
 }

@@ -5,12 +5,16 @@ package jp.co.trifeed.axyio001.Service;
  */
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.Timer;
+
+import jp.co.trifeed.axyio001.MyContext;
+import jp.co.trifeed.axyio001.R;
 
 public class PollingService extends Service {
 
@@ -33,13 +37,14 @@ public class PollingService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.i(TAG, "onStartCommand");
+        Context context = MyContext.getInstance().getApplicationContext();
 
         // タイマーの設定 1秒毎にループ
         mTimer = new Timer(true);
         if(mPollerTask == null) {
             mPollerTask = new PollerTask();
         }
-        mTimer.scheduleAtFixedRate( mPollerTask, 0, 1000);
+        mTimer.scheduleAtFixedRate( mPollerTask, 0, (long)context.getResources().getInteger(R.integer.check_span));
 
         return START_STICKY;
     }

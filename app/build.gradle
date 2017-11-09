@@ -29,7 +29,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/activation.jar')
-    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/mail.jar')
+    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/javax.mail.jar')
     implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/additionnal.jar')
+    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/activation.jar')
 }
