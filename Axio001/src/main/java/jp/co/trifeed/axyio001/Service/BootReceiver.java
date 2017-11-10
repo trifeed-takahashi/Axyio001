@@ -1,4 +1,4 @@
-package jp.co.trifeed.axyio001;
+package jp.co.trifeed.axyio001.Service;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

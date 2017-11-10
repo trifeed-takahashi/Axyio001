@@ -36,7 +36,9 @@ public class PollingService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.i(TAG, "--------------------------------------------");
         Log.i(TAG, "onStartCommand");
+        Log.i(TAG, "--------------------------------------------");
         Context context = MyContext.getInstance().getApplicationContext();
 
         // タイマーの設定 1秒毎にループ
@@ -51,13 +53,17 @@ public class PollingService extends Service {
 
     @Override
     public void onCreate() {
+        Log.i(TAG, "--------------------------------------------");
         Log.i(TAG, "onCreate");
+        Log.i(TAG, "--------------------------------------------");
         super.onCreate();
     }
 
     @Override
     public void onDestroy() {
+        Log.i(TAG, "--------------------------------------------");
         Log.i(TAG, "onDestroy");
+        Log.i(TAG, "--------------------------------------------");
         // タイマー停止
         if( mTimer != null ){
             mTimer.cancel();

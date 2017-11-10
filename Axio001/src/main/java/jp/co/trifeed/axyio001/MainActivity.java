@@ -1,5 +1,6 @@
 package jp.co.trifeed.axyio001;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -12,21 +13,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jp.co.trifeed.axyio001.MailUtil.CheckMail;
 import jp.co.trifeed.axyio001.Service.PollingService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     static final String TAG="MainActivity";
 
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     Handler mHandler = new Handler();
 
     TextView mTVUpdated;
+    TextView mTXTBody;
     Button mBTNConfirm;
 
     @Override
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
                     .penaltyLog()
-//                    .penaltyDeath()
                     .build());
         }
 
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTVUpdated = (TextView) findViewById(R.id.checkdate);
         mBTNConfirm = (Button) findViewById(R.id.confirmButton);
+        mTXTBody = (TextView) findViewById(R.id.textBody);
 
         checkPollingService();
 
@@ -80,9 +80,12 @@ public class MainActivity extends AppCompatActivity {
                         sdfstart.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
                         mTVUpdated.setText("Update : " + sdfstart.format(checkTime));
 
-                        boolean isAlerm = sharedPreferences.getBoolean("NOW_ALERT", false);
-                        if(isAlerm){
-                            startAlarm();
+                        boolean isAlarm = sharedPreferences.getBoolean("NOW_ALERT", false);
+                        mTXTBody.setText(sharedPreferences.getString("MSG_BODY", ""));
+                        if(isAlarm) {
+                            mBTNConfirm.setEnabled(true);
+                        }else{
+                            mBTNConfirm.setEnabled(false);
                         }
                     }
                 });
@@ -113,7 +116,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(!is_Started) {
+            Log.d(TAG, "[" + serviceName + "] is not Started. to Start.");
             startService(new Intent(MainActivity.this, PollingService.class));
+        }else{
+            Log.d(TAG, "[" + serviceName + "] is Started.");
         }
 
     }
@@ -140,10 +146,6 @@ public class MainActivity extends AppCompatActivity {
 
         MyApplication ma = (MyApplication)MyContext.getInstance().getApplicationContext();
         ma.stopAlarm();
-    }
-
-    private void startAlarm(){
-        mBTNConfirm.setEnabled(true);
     }
 
 }

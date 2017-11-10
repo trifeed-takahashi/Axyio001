@@ -1,4 +1,4 @@
-package jp.co.trifeed.axyio001.MailUtil;
+package jp.co.trifeed.axyio001.Service;
 
 /**
  * Created by m.takahashi on 2017/11/02.
@@ -23,10 +23,8 @@ import javax.mail.search.StringTerm;
 import javax.mail.search.SubjectTerm;
 
 import java.io.IOException;
-import java.security.Security;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -128,7 +126,6 @@ public class CheckMail {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putLong("CHECK_DATE", new Date().getTime());
-            editor.commit();
 
             /////////////////////////////////////////////////////
             // 受信したメッセージのテスト表示
@@ -153,27 +150,41 @@ public class CheckMail {
                     Header header = allHeaders.nextElement();
                     if(header.getName().toUpperCase().trim().equals("MESSAGE-ID")){
                         Log.i(TAG, header.getName() + " : " + header.getValue());
+                        editor.putString("MESSAGE_ID", getText(message.getContent()));
                     }
                 }
 
                 // 本文
                 Log.i(TAG, getText(message.getContent()));
+                String body = getText(message.getContent());
+                body = body.replaceAll(context.getString(R.string.check_subject), "");
+                body = body.replaceAll(context.getString(R.string.check_sign), "");
+                body = body.replaceAll("\r\n\r\n", "\r\n");
+                editor.putString("MSG_BODY", body);
 
                 Log.i(TAG, "======================================");
+
+                break;
             }
             /////////////////////////////////////////////////////
+
+            editor.commit();
 
             Log.i(TAG, alMessage.size() + "件の警告メッセージがありました。");
 
             folder.close(false);
 
+            ///////////////////////////////////////////////////////////
             // 警告メッセージがあった場合、アクティビティを表示
             if(sharedPreferences.getBoolean("NOW_ALERT", false)) {
+                MyApplication ma = (MyApplication)MyContext.getInstance().getApplicationContext();
+
+                // アクティビティを表示
                 Intent intent = new Intent(context, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                ma.startActivity(intent);
 
                 // アラームを鳴らす
-                MyApplication ma = (MyApplication)MyContext.getInstance().getApplicationContext();
                 ma.startAlarm();
             }
 
@@ -228,6 +239,13 @@ public class CheckMail {
         if(recvDate < startTime){
             return false;
         }
+
+        long prevTime = sharedPreferences.getLong("RECEIVE_DATE", 0);
+        Log.i(TAG, "Prev : " + prevTime);
+        if(prevTime >= recvDate){
+            return false;
+        }
+
 
         ////////////////////////////////////////////////////
         // 件名のチェック

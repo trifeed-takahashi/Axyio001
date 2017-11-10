@@ -1,12 +1,7 @@
-package jp.co.trifeed.axyio001;
+package jp.co.trifeed.axyio001.Service;
 
-import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.widget.TextView;
-
-import jp.co.trifeed.axyio001.MailUtil.CheckMail;
 
 /**
  * Created by m.takahashi on 2017/11/08.
