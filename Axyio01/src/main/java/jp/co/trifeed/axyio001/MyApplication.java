@@ -10,7 +10,6 @@ import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.StrictMode;
 import android.os.Vibrator;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import jp.co.trifeed.axyio001.R;
 
@@ -90,7 +89,7 @@ public class MyApplication extends Application {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, bid, intent, 0);
         NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Notification notification = new NotificationCompat.Builder(context)
+        Notification notification = new Notification.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setTicker("警報が発生しました")
                 .setWhen(System.currentTimeMillis())

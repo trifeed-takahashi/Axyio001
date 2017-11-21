@@ -4,13 +4,13 @@ android {
     signingConfigs {
         config {
             keyPassword 'MINI98'
-            storeFile file('/Volumes/HD-TSB1T1/AndroidProject/AndroidKey')
+            storeFile file('/Project/AndroidKey')
             storePassword 'MINI98'
             keyAlias 'key0'
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '27.0.0'
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "jp.co.trifeed.axyio001"
         minSdkVersion 22
@@ -33,15 +33,16 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v4:27.0.1'
+    compile 'com.android.support:appcompat-v7:27.0.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    //compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/javax.mail.jar')
-    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/additionnal.jar')
-    implementation files('/Volumes/HD-TSB1T1/AndroidProject/Axyio001/libs/activation.jar')
+    implementation files('/Projects/Axyio001/libs/activation.jar')
+    implementation files('/Projects/Axyio001/libs/additionnal.jar')
+    implementation files('/Projects/Axyio001/libs/mail.jar')
 }
