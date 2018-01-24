@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import java.util.Timer;
@@ -40,6 +41,12 @@ public class PollingService extends Service {
         Log.i(TAG, "onStartCommand");
         Log.i(TAG, "--------------------------------------------");
         Context context = MyContext.getInstance().getApplicationContext();
+
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "My　Tag");
+        wl.acquire();	//  ..screen will stay on during this section..
+        //wl.release();
+
 
         // タイマーの設定 1秒毎にループ
         mTimer = new Timer(true);
