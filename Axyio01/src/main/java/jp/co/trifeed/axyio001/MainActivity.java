@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
     Handler mHandler = new Handler();
 
     TextView mTVUpdated;
+    TextView mTVBuild;
     TextView mTXTBody;
     Button mBTNConfirm;
 
@@ -57,8 +58,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         mTVUpdated = (TextView) findViewById(R.id.checkdate);
+        mTVBuild = (TextView) findViewById(R.id.build);
         mBTNConfirm = (Button) findViewById(R.id.confirmButton);
         mTXTBody = (TextView) findViewById(R.id.textBody);
+
+        mTVBuild.setText("ビルド："+((MyApplication)MyContext.getInstance().getApplicationContext()).getUpdateTime());
 
         checkPollingService();
 

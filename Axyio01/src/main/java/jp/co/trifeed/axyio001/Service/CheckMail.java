@@ -17,8 +17,10 @@ import javax.activation.CommandMap;
 import javax.activation.MailcapCommandMap;
 import javax.mail.*;
 import javax.mail.internet.MimeUtility;
+import javax.mail.search.AndTerm;
 import javax.mail.search.ComparisonTerm;
 import javax.mail.search.ReceivedDateTerm;
+import javax.mail.search.SearchTerm;
 import javax.mail.search.StringTerm;
 import javax.mail.search.SubjectTerm;
 
@@ -29,6 +31,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import jp.co.trifeed.axyio001.Log2SV;
 import jp.co.trifeed.axyio001.MainActivity;
 import jp.co.trifeed.axyio001.MyApplication;
 import jp.co.trifeed.axyio001.MyContext;
@@ -48,7 +51,7 @@ public class CheckMail {
         Context context = MyContext.getInstance().getApplicationContext();
 
         host = context.getString(R.string.imap4_host);
-        imap4Ssl = (context.getString(R.string.imap4_host).equals("YES"));
+        imap4Ssl = (context.getString(R.string.imap4_ssl).equals("YES"));
         imap4Port = context.getString(R.string.imap4_port);
         mailAddress = context.getString(R.string.mail_address);
         mailPassword = context.getString(R.string.mail_password);
@@ -93,9 +96,10 @@ public class CheckMail {
             folder.open(Folder.READ_ONLY);
 
             long startTime = (new Date()).getTime() - context.getResources().getInteger(R.integer.check_duration);
-            SimpleDateFormat sdfstart = new SimpleDateFormat("yyyy/MM/dd (EEE) HH:mm:ss");
+            SimpleDateFormat sdfstart = new SimpleDateFormat("yyyy/MM/dd (EEE)");
             sdfstart.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
-            Log.i(TAG,"Date : " + sdfstart.format(startTime) + " 以降のメールを取得します。。。");
+            Log.i(TAG,"StartDate : " + sdfstart.format(startTime) + " 以降のメールを取得します。。。");
+            Log2SV.Log("StartDate : " + sdfstart.format(startTime) + " 以降のメールを取得します。。。");
 
             // IMAPサーバへの検索条件の作成
             messages = null;
@@ -103,7 +107,11 @@ public class CheckMail {
             Calendar calendar = new GregorianCalendar(tz);
             Date trialTime = new Date(startTime);
             calendar.setTime(trialTime);
-            messages = folder.search(new ReceivedDateTerm(ComparisonTerm.GE, calendar.getTime()));
+
+            SearchTerm olderThan = new ReceivedDateTerm(ComparisonTerm.LE, new GregorianCalendar(tz).getTime());
+            SearchTerm newerThan = new ReceivedDateTerm(ComparisonTerm.GT, calendar.getTime());
+            SearchTerm andTerm = new AndTerm(olderThan, newerThan);
+            messages = folder.search(andTerm);
 
             // 警告メールに該当するメールを保存するArrayList
             ArrayList<Message> alMessage = new ArrayList<Message>();
@@ -116,6 +124,7 @@ public class CheckMail {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd(EE) HH:mm:ss z");
                 sdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
                 Log.i(TAG, "RECV : " + sdf.format(recvDate) + " : " + message.getSubject());
+                Log2SV.Log("RECV : " + sdf.format(recvDate) + " : " + message.getSubject());
 
                 if(checkAlertMail(message)){
                     alMessage.add(message);
@@ -134,6 +143,12 @@ public class CheckMail {
                 Log.i(TAG, "======================================");
 
                 long recvDate = message.getReceivedDate().getTime();
+
+                long now = System.currentTimeMillis();
+                Log.i(TAG, "NOW : " + now);
+                Log.i(TAG, "RCV : " + recvDate);
+
+
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
                 sdf.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
                 Log.i(TAG, "Date : " + sdf.format(recvDate));
@@ -222,6 +237,7 @@ public class CheckMail {
             Header header = allHeaders.nextElement();
             if(header.getName().toUpperCase().trim().equals("MESSAGE-ID")){
                 messageId = header.getValue();
+                break;
             }
         }
 

@@ -13,6 +13,8 @@ public class PollerTask extends TimerTask {
     @Override
     public void run() {
         AsyncImapRequest task = new AsyncImapRequest();
-        task.execute();
+        if(!task.inExec) {
+            task.execute();
+        }
     }
 }

@@ -11,6 +11,8 @@ public class AsyncImapRequest extends AsyncTask<Uri.Builder, Void, String> {
 
     static final String TAG="AsyncImapRequest";
 
+    public boolean inExec = false;
+
     public AsyncImapRequest() {
 
     }
@@ -20,8 +22,10 @@ public class AsyncImapRequest extends AsyncTask<Uri.Builder, Void, String> {
     @Override
     protected String doInBackground(Uri.Builder... builder) {
 
+        inExec = true;
         CheckMail mail = new CheckMail();
         mail.getMail();
+        inExec = false;
 
         return "";
     }

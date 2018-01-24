@@ -9,21 +9,24 @@ android {
             keyAlias 'key0'
         }
     }
-    compileSdkVersion 26
-    buildToolsVersion '27.0.0'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.1'
     defaultConfig {
         applicationId "jp.co.trifeed.axyio001"
-        minSdkVersion 22
-        targetSdkVersion 22
+        minSdkVersion 21
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
+        //release {
+        //    minifyEnabled false
+        //    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        //    signingConfig signingConfigs.config
+        //}
+        debug {
+            debuggable true
         }
     }
     productFlavors {
@@ -33,15 +36,17 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v4:27.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     implementation files('libs/activation.jar')
     implementation files('libs/mail.jar')
     implementation files('libs/additionnal.jar')
+    implementation files('libs/okhttp-3.9.1.jar')
+    implementation files('libs/okio-1.13.0.jar')
 }

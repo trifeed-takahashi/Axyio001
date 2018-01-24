@@ -3,19 +3,19 @@
     <string name="imap4_host">imap.mail.yahoo.co.jp</string>
     <string name="imap4_ssl">YES</string>
     <string name="imap4_port">993</string>
-<!--
     <string name="mail_address">spqdk280@ybb.ne.jp</string>
     <string name="mail_password">MINIMINI98</string>
     <string name="check_from">m.takahashi@trifeed.co.jp</string>
--->
-    <string name="mail_address">moriya_htr@ybb.ne.jp</string>
-    <string name="mail_password">n27e2228</string>
-    <string name="check_from">alarm01_device@ybb.ne.jp</string>
+    <!--
+        <string name="mail_address">moriya_htr@ybb.ne.jp</string>
+        <string name="mail_password">n27e2228</string>
+        <string name="check_from">alarm01_device@ybb.ne.jp</string>
+    -->
     <integer name="check_span">60000</integer>
     <integer name="check_duration">3600000</integer>
     <string name="check_subject">悠林館・物産館共有送水ポンプ施設</string>
     <string name="check_presubject">[axyio</string>
-    <string name="check_sign">aXYio Mail</string>
+    <string name="check_sign">aXYio　Mail</string>
     <string name="service_name">jp.co.trifeed.axyio001.Service.PollingService</string>
     <string name="confirm_button_text">確認しました</string>
     <string name="title_activity_settings">設定</string>

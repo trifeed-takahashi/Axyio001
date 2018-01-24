@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.os.StrictMode;
@@ -13,7 +15,11 @@ import android.os.Vibrator;
 import android.util.Log;
 import jp.co.trifeed.axyio001.R;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.zip.ZipFile;
 
 /**
  * Created by m.takahashi on 2017/11/02.
@@ -122,4 +128,30 @@ public class MyApplication extends Application {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.cancel();
     }
+
+    public String getUpdateTime(){
+
+        PackageInfo packageInfo = null;
+        String strDate = "";
+        try {
+            packageInfo = getPackageManager().getPackageInfo("jp.co.trifeed.axyio001", PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // 1970年1月1日午前0時からの経過時間からDateクラスを作成する
+        Date dateLastUpdateTime = new Date(packageInfo.lastUpdateTime);
+
+        File f = new File(this.getApplicationInfo().sourceDir);
+        long time = f.lastModified();
+        Date date = new Date(time);
+
+        //作成したDateクラス（＝インストール日時、更新日時）を表示する
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddkkmm");
+        //strDate = sdf.format(dateLastUpdateTime);
+        strDate = sdf.format(date);
+        return strDate;
+    }
+
+
 }
