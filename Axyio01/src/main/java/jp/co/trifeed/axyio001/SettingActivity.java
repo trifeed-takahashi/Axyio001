@@ -1,7 +1,7 @@
 package jp.co.trifeed.axyio001;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class SettingActivity extends Activity {
