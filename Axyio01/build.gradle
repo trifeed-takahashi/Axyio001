@@ -9,14 +9,14 @@ android {
             keyAlias 'key0'
         }
     }
-    compileSdkVersion 21
+    compileSdkVersion 27
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "jp.co.trifeed.axyio001"
         minSdkVersion 21
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName '1.1'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,14 +37,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    api 'com.android.support:support-v13:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    androidTestApi('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:support-v13:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
